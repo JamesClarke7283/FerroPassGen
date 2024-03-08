@@ -1,6 +1,13 @@
 [package]
 name = "ferropassgen"
 version = "0.1.0"
+authors = ["James Clarke <james@jamesdavidclarke.com>"]
+description = "A library for generating secure passwords and passphrases"
+repository = "https://github.com/JamesClarke7283/FerroPassGen"
+license = "GPL-3.0-or-later"
+readme = "README.md"
+keywords = ["password", "passphrase", "generator", "security"]
+categories = ["cryptography", "command-line-utilities"]
 edition = "2021"
 
 [dependencies]

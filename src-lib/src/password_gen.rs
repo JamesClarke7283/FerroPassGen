@@ -2,6 +2,28 @@ use super::{PassGen, PasswordGen, PassGenError};
 use rand::seq::SliceRandom;
 
 impl PassGen<char> for PasswordGen {
+    /// Creates a new instance of the password generator.
+    ///
+    /// # Arguments
+    ///
+    /// - `length`: The desired length of the generated password.
+    /// - `tokenset`: The set of characters to choose from when generating the password.
+    /// - `_separator`: An unused parameter for compatibility with the `PassGen` trait.
+    /// - `_word_case`: An unused parameter for compatibility with the `PassGen` trait.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `PassGenError` if the provided length is 0 or the token set is empty.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use ferropassgen::{PassGen, PasswordGen};
+    ///
+    /// let length = 8;
+    /// let tokenset = vec!['a', 'b', 'c', 'd', 'e'];
+    /// let password_gen = PasswordGen::new(length, tokenset, None, None).unwrap();
+    /// ```
     fn new(length: usize, tokenset: Vec<char>, _separator: Option<char>, _word_case: Option<bool>) -> Result<Self, PassGenError> {
         if length == 0 {
             return Err(PassGenError::InvalidLength);
@@ -12,6 +34,20 @@ impl PassGen<char> for PasswordGen {
         Ok(Self { length, tokenset })
     }
 
+    /// Generates a password using the password generator.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use ferropassgen::{PassGen, PasswordGen};
+    ///
+    /// let length = 8;
+    /// let tokenset = vec!['a', 'b', 'c', 'd', 'e'];
+    /// let password_gen = PasswordGen::new(length, tokenset, None, None).unwrap();
+    /// let password = password_gen.generate();
+    /// assert_eq!(password.len(), 8);
+    /// assert!(password.chars().all(|c| ['a', 'b', 'c', 'd', 'e'].contains(&c)));
+    /// ```
     fn generate(&self) -> String {
         let mut rng = rand::thread_rng();
         (0..self.length)

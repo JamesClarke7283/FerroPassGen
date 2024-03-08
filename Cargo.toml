@@ -2,6 +2,11 @@
 members = ["src-lib", "src-cli"]
 resolver = "2"
 
+[workspace.package]
+authors = ["James Clarke <james@jamesdavidclarke.com>"]
+repository = "https://github.com/JamesClarke7283/FerroPassGen"
+license = "GPL-3.0-or-later"
+
 [workspace.lints.rust]
 unsafe_code = "forbid"
 
