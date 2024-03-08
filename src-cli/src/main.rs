@@ -14,10 +14,10 @@ struct PasswordArgs {
 struct PassphraseArgs {
     #[arg(long)]
     length: usize,
-    #[arg(long)]
+    #[arg(long, default_value = "-")]
     separator: char,
-    #[arg(long, help = "Use uppercase words (true) or lowercase words (false)", default_value = "false")]
-    word_case: bool,
+    #[arg(long, help = "Use uppercase words")]
+    upper: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -45,7 +45,7 @@ fn main() {
         }
         Commands::Passphrase(args) => {
             let wordlist: Vec<String> = DICEWARE_WORDLIST.iter().map(|&s| s.to_string()).collect();
-            let passphrase_gen = PassphraseGen::new(args.length, wordlist, Some(args.separator), Some(args.word_case)).unwrap();
+            let passphrase_gen = PassphraseGen::new(args.length, wordlist, Some(args.separator), Some(args.upper)).unwrap();
             let passphrase = passphrase_gen.generate();
             println!("Generated passphrase: {passphrase}");
         }
