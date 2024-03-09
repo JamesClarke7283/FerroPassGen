@@ -1,6 +1,6 @@
 [package]
 name = "ferropassgen-cli"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["James Clarke <james@jamesdavidclarke.com>"]
 description = "A command-line tool for generating secure passwords and passphrases"
 repository = "https://github.com/JamesClarke7283/FerroPassGen"
@@ -14,7 +14,7 @@ rust-version = "1.74.1"
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }
 diceware_wordlists = "1.2"
-ferropassgen = { path = "../src-lib" }
+ferropassgen = { path = "../src-lib", version = "1" }
 
 [lints]
 workspace = true
