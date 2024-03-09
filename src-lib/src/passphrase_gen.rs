@@ -87,7 +87,7 @@ mod tests {
         assert!(passphrase_gen.is_ok());
         
         // Test invalid length
-        let passphrase_gen = PassphraseGen::new(0, tokenset.clone(), None, None);
+        let passphrase_gen = PassphraseGen::new(0, tokenset, None, None);
         assert_eq!(passphrase_gen.unwrap_err(), PassGenError::InvalidLength);
         
         // Test empty tokenset
