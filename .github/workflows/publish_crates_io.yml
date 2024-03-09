@@ -1,0 +1,56 @@
+name: Auto Publish to crates.io
+
+on:
+  workflow_run:
+    workflows: ["Rust Tests"]
+    types: [completed]
+    branches: [master]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          default: true
+
+      - name: Check for version change in src-cli/Cargo.toml
+        id: version-check-src-cli
+        run: |
+          git fetch --depth=2
+          VERSION_OLD=$(git show HEAD^:./src-cli/Cargo.toml | grep '^version' | sed 's/version = "\(.*\)"/\1/')
+          VERSION_NEW=$(grep '^version' ./src-cli/Cargo.toml | sed 's/version = "\(.*\)"/\1/')
+          if [ "$VERSION_OLD" != "$VERSION_NEW" ]; then
+            echo "Version changed from $VERSION_OLD to $VERSION_NEW"
+            echo "::set-output name=publish::true"
+          fi
+
+      - name: Publish src-cli to crates.io
+        if: steps.version-check-src-cli.outputs.publish == 'true'
+        uses: katyo/publish-crates@v2
+        with:
+          registry-token: ${{ secrets.CRATES_IO_TOKEN }}
+          path: src-cli
+
+      - name: Check for version change in src-lib/Cargo.toml
+        id: version-check-src-lib
+        run: |
+          git fetch --depth=2
+          VERSION_OLD=$(git show HEAD^:./src-lib/Cargo.toml | grep '^version' | sed 's/version = "\(.*\)"/\1/')
+          VERSION_NEW=$(grep '^version' ./src-lib/Cargo.toml | sed 's/version = "\(.*\)"/\1/')
+          if [ "$VERSION_OLD" != "$VERSION_NEW" ]; then
+            echo "Version changed from $VERSION_OLD to $VERSION_NEW"
+            echo "::set-output name=publish::true"
+          fi
+
+      - name: Publish src-lib to crates.io
+        if: steps.version-check-src-lib.outputs.publish == 'true'
+        uses: katyo/publish-crates@v2
+        with:
+          registry-token: ${{ secrets.CRATES_IO_TOKEN }}
+          path: src-lib

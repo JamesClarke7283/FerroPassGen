@@ -1,0 +1,19 @@
+name: Rust Clippy Lint
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  clippy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run Clippy
+      run: cargo clippy --all-targets -- -D warnings
