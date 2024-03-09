@@ -9,6 +9,7 @@ readme = "README.md"
 keywords = ["password", "passphrase", "generator", "security"]
 categories = ["cryptography", "command-line-utilities"]
 edition = "2021"
+rust-version = "1.60.0"
 
 [dependencies]
 rand = "0.8"
