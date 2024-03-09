@@ -1,6 +1,6 @@
 [package]
 name = "ferropassgen-cli"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["James Clarke <james@jamesdavidclarke.com>"]
 description = "A command-line tool for generating secure passwords and passphrases"
 repository = "https://github.com/JamesClarke7283/FerroPassGen"
